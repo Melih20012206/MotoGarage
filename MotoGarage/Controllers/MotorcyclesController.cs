@@ -125,5 +125,39 @@ namespace MotoGarage.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var motorcycle = await context.Motorcycles
+                .Include(m => m.Customer)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (motorcycle == null)
+            {
+                return NotFound();
+            }
+
+            return View(motorcycle);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var motorcycle = await context.Motorcycles.FindAsync(id);
+
+            if (motorcycle != null)
+            {
+                context.Motorcycles.Remove(motorcycle);
+                await context.SaveChangesAsync();
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

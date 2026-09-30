@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MotoGarage.Data;
 using MotoGarage.Models;
 
@@ -11,6 +12,14 @@ namespace MotoGarage.Controllers
         public CustomersController(ApplicationDbContext context)
         {
             this.context = context;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var customers = await context.Customers
+                .ToListAsync();
+
+            return View(customers);
         }
 
         public IActionResult Create()
@@ -33,11 +42,50 @@ namespace MotoGarage.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Delete(int? id)
         {
-            var customers = context.Customers.ToList();
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-            return View(customers);
+            var customer = await context.Customers
+                .Include(c => c.Motorcycles)
+                .FirstOrDefaultAsync(c => c.Id == id);
+
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
+            return View(customer);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var customer = await context.Customers
+                .Include(c => c.Motorcycles)
+                .FirstOrDefaultAsync(c => c.Id == id);
+
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
+            if (customer.Motorcycles.Any())
+            {
+                TempData["ErrorMessage"] =
+                    "You cannot delete this customer because they still have motorcycles.";
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            context.Customers.Remove(customer);
+            await context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

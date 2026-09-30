@@ -1,0 +1,54 @@
+﻿@model MotoGarage.Models.Customer
+
+@{
+    ViewData["Title"] = "Delete Customer";
+}
+
+<div class="container mt-4">
+    <h1>Delete Customer</h1>
+
+    <div class="alert alert-danger">
+        Are you sure you want to delete this customer?
+    </div>
+
+    <dl class="row">
+        <dt class="col-sm-3">First Name</dt>
+        <dd class="col-sm-9">@Model.FirstName</dd>
+
+        <dt class="col-sm-3">Last Name</dt>
+        <dd class="col-sm-9">@Model.LastName</dd>
+
+        <dt class="col-sm-3">Phone Number</dt>
+        <dd class="col-sm-9">@Model.PhoneNumber</dd>
+
+        <dt class="col-sm-3">Email</dt>
+        <dd class="col-sm-9">@Model.Email</dd>
+    </dl>
+
+    @if (Model.Motorcycles.Any())
+    {
+        <div class="alert alert-warning">
+            This customer cannot be deleted because they still have
+            @Model.Motorcycles.Count motorcycle(s).
+            Delete their motorcycles first.
+        </div>
+
+        <a asp-action="Index" class="btn btn-secondary">
+            Back to Customers
+        </a>
+    }
+    else
+    {
+        <form asp-action="Delete" method="post">
+            <input type="hidden" asp-for="Id" />
+
+            <button type="submit" class="btn btn-danger">
+                Delete
+            </button>
+
+            <a asp-action="Index" class="btn btn-secondary">
+                Cancel
+            </a>
+        </form>
+    }
+</div>
