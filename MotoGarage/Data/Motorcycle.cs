@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace MotoGarage.Models
 {
@@ -28,6 +29,7 @@ namespace MotoGarage.Models
 
         public int CustomerId { get; set; }
 
+        [ValidateNever]
         public Customer Customer { get; set; } = null!;
 
         public ICollection<ServiceRecord> ServiceRecords { get; set; }
