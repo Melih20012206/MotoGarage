@@ -25,5 +25,12 @@ namespace MotoGarage.Models
 
         [StringLength(500)]
         public string? Description { get; set; }
+
+        public int CustomerId { get; set; }
+
+        public Customer Customer { get; set; } = null!;
+
+        public ICollection<ServiceRecord> ServiceRecords { get; set; }
+            = new List<ServiceRecord>();
     }
 }
