@@ -73,5 +73,57 @@ namespace MotoGarage.Controllers
 
             return View(motorcycle);
         }
+
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var motorcycle = await context.Motorcycles.FindAsync(id);
+
+            if (motorcycle == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.Customers = new SelectList(
+                context.Customers,
+                "Id",
+                "FirstName",
+                motorcycle.CustomerId);
+
+            return View(motorcycle);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(
+            int id,
+                [Bind("Id,Brand,Model,Year,EngineCapacity,Kilometers,Description,CustomerId")]
+                Motorcycle motorcycle)
+        {
+            if (id != motorcycle.Id)
+            {
+                return NotFound();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Customers = new SelectList(
+                    context.Customers,
+                    "Id",
+                    "FirstName",
+                    motorcycle.CustomerId);
+
+                return View(motorcycle);
+            }
+
+            context.Update(motorcycle);
+            await context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
