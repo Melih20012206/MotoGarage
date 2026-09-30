@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using MotoGarage.Data;
 using MotoGarage.Models;
 
@@ -53,6 +53,25 @@ namespace MotoGarage.Controllers
             await context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var motorcycle = await context.Motorcycles
+                .Include(m => m.Customer)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (motorcycle == null)
+            {
+                return NotFound();
+            }
+
+            return View(motorcycle);
         }
     }
 }
