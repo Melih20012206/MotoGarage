@@ -1,0 +1,41 @@
+﻿@model IEnumerable<MotoGarage.Models.Motorcycle>
+
+@{
+    ViewData["Title"] = "Motorcycles";
+}
+
+<div class="container mt-4">
+    <h1>Motorcycle Garage</h1>
+
+    <p>Manage motorcycles registered in MotoGarage.</p>
+
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>Year</th>
+                <th>Engine</th>
+                <th>Kilometers</th>
+                <th>Owner</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var motorcycle in Model)
+            {
+                <tr>
+                    <td>@motorcycle.Brand</td>
+                    <td>@motorcycle.Model</td>
+                    <td>@motorcycle.Year</td>
+                    <td>@motorcycle.EngineCapacity cc</td>
+                    <td>@motorcycle.Kilometers km</td>
+                    <td>
+                        @motorcycle.Customer?.FirstName
+                        @motorcycle.Customer?.LastName
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
