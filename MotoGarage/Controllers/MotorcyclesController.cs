@@ -64,6 +64,7 @@ namespace MotoGarage.Controllers
 
             var motorcycle = await context.Motorcycles
                 .Include(m => m.Customer)
+                .Include(m => m.ServiceRecords)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (motorcycle == null)
