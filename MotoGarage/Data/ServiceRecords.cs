@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace MotoGarage.Models
 {
@@ -21,6 +22,7 @@ namespace MotoGarage.Models
 
         public int MotorcycleId { get; set; }
 
+        [ValidateNever]
         public Motorcycle Motorcycle { get; set; } = null!;
     }
 }

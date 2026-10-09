@@ -1,0 +1,68 @@
+﻿@model IEnumerable<MotoGarage.Models.ServiceRecord>
+
+@{
+    ViewData["Title"] = "Service History";
+}
+
+<h1>Service History</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">
+        Add Service Record
+    </a>
+</p>
+
+@if (!Model.Any())
+{
+    <p>No service records yet.</p>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Motorcycle</th>
+                    <th>Service</th>
+                    <th>Date</th>
+                    <th>Price (€)</th>
+                    <th>Notes</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var record in Model)
+                {
+                    <tr>
+                        <td>
+                            <a asp-controller="Motorcycles"
+                               asp-action="Details"
+                               asp-route-id="@record.MotorcycleId">
+                                @record.Motorcycle.Brand
+                                @record.Motorcycle.Model
+                                (#@record.MotorcycleId)
+                            </a>
+                        </td>
+                        <td>@record.ServiceType</td>
+                        <td>@record.ServiceDate.ToString("dd.MM.yyyy")</td>
+                        <td>@record.Price.ToString("F2") €</td>
+                        <td>@record.Notes</td>
+                        <td>
+                            <a asp-action="Edit"
+                               asp-route-id="@record.Id"
+                               class="btn btn-sm btn-warning">
+                                Edit
+                            </a>
+                            <a asp-action="Delete"
+                               asp-route-id="@record.Id"
+                               class="btn btn-sm btn-danger">
+                                Delete
+                            </a>
+                        </td>
+                        
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
