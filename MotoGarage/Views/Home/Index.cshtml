@@ -1,8 +1,70 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model MotoGarage.Models.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Dashboard";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-center mb-4">
+    <h1 class="display-4">MotoGarage</h1>
+    <p class="lead">
+        Manage customers, motorcycles and service history.
+    </p>
+</div>
+
+<div class="row g-3">
+    <div class="col-12 col-md-6 col-lg-3">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h2 class="h5">Customers</h2>
+                <p class="display-6">@Model.CustomersCount</p>
+                <a asp-controller="Customers"
+                   asp-action="Index"
+                   class="btn btn-primary">
+                    View Customers
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6 col-lg-3">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h2 class="h5">Motorcycles</h2>
+                <p class="display-6">@Model.MotorcyclesCount</p>
+                <a asp-controller="Motorcycles"
+                   asp-action="Index"
+                   class="btn btn-primary">
+                    View Motorcycles
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6 col-lg-3">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h2 class="h5">Service Records</h2>
+                <p class="display-6">@Model.ServiceRecordsCount</p>
+                <a asp-controller="ServiceRecords"
+                   asp-action="Index"
+                   class="btn btn-primary">
+                    View Service History
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6 col-lg-3">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h2 class="h5">Total Service Value</h2>
+                <p class="fs-2">
+                    @Model.TotalServiceValue.ToString("F2") €
+                </p>
+                <p class="text-muted">
+                    Combined value of all recorded services.
+                </p>
+            </div>
+        </div>
+    </div>
 </div>
