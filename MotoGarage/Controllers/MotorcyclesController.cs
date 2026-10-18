@@ -15,13 +15,29 @@ namespace MotoGarage.Controllers
             this.context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? searchTerm)
         {
-            var motorcycles = await context.Motorcycles
+            searchTerm = searchTerm?.Trim();
+            ViewBag.SearchTerm = searchTerm;
+
+            var motorcycles = context.Motorcycles
                 .Include(m => m.Customer)
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                motorcycles = motorcycles.Where(m =>
+                    m.Brand.Contains(searchTerm)
+                    || m.Model.Contains(searchTerm));
+            }
+
+            var results = await motorcycles
+                .OrderBy(m => m.Brand)
+                .ThenBy(m => m.Model)
+                .ThenBy(m => m.Id)
                 .ToListAsync();
 
-            return View(motorcycles);
+            return View(results);
         }
 
         public IActionResult Create()
@@ -102,8 +118,8 @@ namespace MotoGarage.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(
             int id,
-                [Bind("Id,Brand,Model,Year,EngineCapacity,Kilometers,Description,CustomerId")]
-                Motorcycle motorcycle)
+            [Bind("Id,Brand,Model,Year,EngineCapacity,Kilometers,Description,CustomerId")]
+            Motorcycle motorcycle)
         {
             if (id != motorcycle.Id)
             {
