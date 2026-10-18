@@ -6,11 +6,16 @@ MotoGarage is an ASP.NET Core MVC application for managing motorcycle customers,
 
 - Create, list, edit and delete customers. Customers with motorcycles cannot be deleted.
 - Create, list, view details, edit and delete motorcycles.
+- Search motorcycles by brand or model.
 - Create, list, edit and delete service records with a service type, date, price and optional notes.
 - View each motorcycle's service history and total service cost.
-- View dashboard counts for customers, motorcycles and service records, plus total service value.
+- View dashboard counts for customers, motorcycles and service records.
+- View today's service value on the dashboard.
+- View the current month's service value on the Service History page.
+- Daily and monthly values are calculated from service dates; previous records remain saved.
 - Prices are recorded and displayed in euros (EUR).
 - Form validation and responsive pages using Bootstrap.
+- Dark garage theme with a motorcycle background.
 
 ## Technologies
 
