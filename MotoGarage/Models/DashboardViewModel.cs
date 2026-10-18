@@ -8,6 +8,6 @@
 
         public int ServiceRecordsCount { get; set; }
 
-        public decimal TotalServiceValue { get; set; }
+        public decimal TodayServiceValue { get; set; }
     }
 }

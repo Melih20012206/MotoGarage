@@ -4,10 +4,12 @@
     ViewData["Title"] = "Dashboard";
 }
 
-<div class="text-center mb-4">
-    <h1 class="display-4">MotoGarage</h1>
-    <p class="lead">
-        Manage customers, motorcycles and service history.
+<div class="dashboard-welcome mb-4">
+    <span class="dashboard-label">WORKSHOP DASHBOARD</span>
+    <h1 class="display-4">Welcome to MotoGarage</h1>
+    <p class="lead mb-0">
+        Your garage, organized. Manage customers, motorcycles
+        and service history in one place.
     </p>
 </div>
 
@@ -57,12 +59,12 @@
     <div class="col-12 col-md-6 col-lg-3">
         <div class="card h-100 shadow-sm">
             <div class="card-body">
-                <h2 class="h5">Total Service Value</h2>
+                <h2 class="h5">Today's Service Value</h2>
                 <p class="fs-2">
-                    @Model.TotalServiceValue.ToString("F2") €
+                    @Model.TodayServiceValue.ToString("F2") €
                 </p>
-                <p class="text-muted">
-                    Combined value of all recorded services.
+                <p class="text-muted mb-0">
+                    Value of services dated today.
                 </p>
             </div>
         </div>

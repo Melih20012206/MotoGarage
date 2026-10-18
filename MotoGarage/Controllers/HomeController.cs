@@ -17,12 +17,20 @@ namespace MotoGarage.Controllers
 
         public async Task<IActionResult> Index()
         {
+            var today = DateTime.Today;
+            var tomorrow = today.AddDays(1);
+
             var model = new DashboardViewModel
             {
                 CustomersCount = await context.Customers.CountAsync(),
+
                 MotorcyclesCount = await context.Motorcycles.CountAsync(),
+
                 ServiceRecordsCount = await context.ServiceRecords.CountAsync(),
-                TotalServiceValue = await context.ServiceRecords
+
+                TodayServiceValue = await context.ServiceRecords
+                    .Where(s => s.ServiceDate >= today
+                        && s.ServiceDate < tomorrow)
                     .SumAsync(s => (decimal?)s.Price) ?? 0m
             };
 

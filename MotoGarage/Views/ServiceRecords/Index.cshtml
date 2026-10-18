@@ -2,9 +2,30 @@
 
 @{
     ViewData["Title"] = "Service History";
+
+    var today = DateTime.Today;
+    var monthStart = new DateTime(today.Year, today.Month, 1);
+    var nextMonthStart = monthStart.AddMonths(1);
+
+    var monthlyServiceValue = Model
+        .Where(record => record.ServiceDate >= monthStart
+            && record.ServiceDate < nextMonthStart)
+        .Sum(record => record.Price);
 }
 
 <h1>Service History</h1>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <h2 class="h5">This Month's Service Value</h2>
+        <p class="fs-2 mb-1">
+            @monthlyServiceValue.ToString("F2") €
+        </p>
+        <p class="text-muted mb-0">
+            Value of services dated this month.
+        </p>
+    </div>
+</div>
 
 <p>
     <a asp-action="Create" class="btn btn-primary">
@@ -44,7 +65,9 @@ else
                             </a>
                         </td>
                         <td>@record.ServiceType</td>
-                        <td>@record.ServiceDate.ToString("dd.MM.yyyy")</td>
+                        <td>
+                            @record.ServiceDate.ToString("dd.MM.yyyy")
+                        </td>
                         <td>@record.Price.ToString("F2") €</td>
                         <td>@record.Notes</td>
                         <td>
@@ -59,7 +82,6 @@ else
                                 Delete
                             </a>
                         </td>
-                        
                     </tr>
                 }
             </tbody>
