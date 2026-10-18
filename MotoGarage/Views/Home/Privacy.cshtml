@@ -1,6 +1,60 @@
 ﻿@{
-    ViewData["Title"] = "Privacy Policy";
+    ViewData["Title"] = "Privacy and Data";
 }
+
 <h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<p>
+    MotoGarage is a motorcycle garage management application
+    developed for the SoftUni ASP.NET Fundamentals course.
+    This page describes the data used by the demonstration application.
+</p>
+
+<h2 class="h4 mt-4">Information stored</h2>
+
+<p>The application stores information entered into its forms:</p>
+
+<ul>
+    <li>Customer first names, last names, phone numbers and optional email addresses.</li>
+    <li>Motorcycle details and their associated customers.</li>
+    <li>Service types, service dates, prices and optional notes.</li>
+</ul>
+
+<h2 class="h4 mt-4">How information is used</h2>
+
+<p>
+    Information is used to manage customers, motorcycles and service
+    history, and to calculate dashboard counts and service values.
+</p>
+
+<h2 class="h4 mt-4">Data storage</h2>
+
+<p>
+    Application records are stored in the SQL Server database
+    configured for this installation. The default development
+    configuration uses SQL Server Express LocalDB.
+</p>
+
+<h2 class="h4 mt-4">Access to records</h2>
+
+<p>
+    This demonstration version does not include user accounts or
+    access restrictions. Anyone who can access the running application
+    can use its record management features.
+    Use fictional customer information when testing or demonstrating it.
+</p>
+
+<h2 class="h4 mt-4">Editing and deleting information</h2>
+
+<p>
+    Records can be edited or deleted through the application.
+    A customer with linked motorcycles cannot be deleted.
+    Deleting a motorcycle also deletes its associated service records.
+</p>
+
+<h2 class="h4 mt-4">Daily and monthly values</h2>
+
+<p>
+    Daily and monthly service values are calculated using service dates.
+    Starting a new day or month does not delete previous records.
+</p>
